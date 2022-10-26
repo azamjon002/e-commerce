@@ -39,8 +39,8 @@
                                     </div>
                                     <div class="col-lg-12 col-md-12">
                                         <div class="form-group">
-                                            <label for="summary">summary</label>
-                                            <textarea id="summary" type="text" class="form-control" placeholder="Write some words... "
+                                            <label for="description">Summary</label>
+                                            <textarea id="description" type="text" class="form-control" placeholder="Write some words... "
                                                       name="summary">{{old('summary')}}</textarea>
                                         </div>
                                     </div>
@@ -61,13 +61,23 @@
                                     </div>
 
                                     <div class="col-lg-12 col-sm-12">
-                                        <label for="">Is Parent</label>
-                                        <input type="checkbox" value="1" checked class="form-control" placeholder="Yes">
+                                        <label for="">Is Parent <span class="text-danger">*</span> :</label>
+                                        <input id="is_parent" name="is_parent" type="checkbox" value="1" checked >  Yes
+                                    </div>
+
+                                    <div class="col-lg-12 col-sm-12 d-none" id="parent_cat_div">
+                                        <label for="">Parent Category</label>
+                                        <select class="form-control show-tick" name="parent_id">
+                                            <option value="">-- Parent Category --</option>
+                                            @foreach($parent_cats as $pcat)
+                                                <option value="{{$pcat->id}}">{{$pcat->title}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
 
                                     <div class="col-lg-12 col-sm-12">
                                         <select class="form-control show-tick" name="status">
-                                            <option value="">-- Gender --</option>
+                                            <option value="">-- Status --</option>
                                             <option value="active" {{old('status') == 'active' ? 'selected' : ''}}>Active
                                             </option>
                                             <option value="inactive" {{old('status') == 'inactive' ? 'selected' : ''}}>
@@ -99,5 +109,16 @@
         $(document).ready(function() {
             $('#description').summernote();
         });
+
+        $('#is_parent').change(function (e) {
+            e.preventDefault();
+            var is_checked = $('#is_parent').prop('checked');
+            if(is_checked){
+                $('#parent_cat_div').addClass('d-none');
+                $('#parent_cat_div').val('');
+            }else {
+                $('#parent_cat_div').removeClass('d-none');
+            }
+        })
     </script>
 @endsection

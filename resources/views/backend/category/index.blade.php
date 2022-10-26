@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-lg-12 col-md-12 col-sm-12">
                         <h2 class="float-left"><a href="javascript:void(0);" class="btn btn-xs btn-link btn-toggle-fullwidth"><i class="fa fa-arrow-left"></i></a> All Categories</h2>
-                        <a href="{{route('banner.create')}}" class="btn btn-sm btn-outline-primary float-right">
+                        <a href="{{route('category.create')}}" class="btn btn-sm btn-outline-primary float-right">
                             <i class="icon-plus"> </i>
                             Create Category
                         </a>
@@ -44,7 +44,7 @@
                                                 <img src="{{$item->photo}}" alt="" width="90" height="70">
                                             </td>
                                             <td>{{$item->is_parent === 1 ? 'Yes' : 'No'}}</td>
-                                            <td>{{$item->parent_id}}</td>
+                                            <td>{{\App\Models\Category::where('id', $item->parent_id)->value('title')}}</td>
                                             <td>
                                                 <input type="checkbox" name="toggle" value="{{$item->id}}" {{$item->status == 'active' ? 'checked':''}} data-toggle="toggle" data-on="active" data-off="inactive" data-size="sm" data-onstyle="success" data-offstyle="danger">
                                             </td>
