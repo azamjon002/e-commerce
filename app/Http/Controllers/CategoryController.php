@@ -127,7 +127,7 @@ class CategoryController extends Controller
             $status = $category->fill($data)->save();
 
             if ($status){
-                return redirect()->route('category.index')->with('success', 'Successfully created category');
+                return redirect()->route('category.index')->with('success', 'Successfully updated category');
             }else{
                 return back()->with('error', 'Something went wrong!');
             }
