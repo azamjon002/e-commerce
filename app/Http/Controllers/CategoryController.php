@@ -25,6 +25,21 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
+
+    public function getChildParentID(Request $request, $id)
+    {
+        $category = Category::find($request->id);
+        if ($category){
+            $child_id = Category::getChildByParentID($request->id);
+            if (count($child_id)<=0){
+                return response()->json(['status'=>false, 'data'=>null, 'msg'=>'']);
+            }else{
+                return response()->json(['status'=>true, 'data'=>$child_id, 'msg'=>'']);
+            }
+        }else{
+            return response()->json(['status'=>false, 'data'=>null, 'msg'=>'']);
+        }
+    }
     public function create()
     {
         $parent_cats = Category::where('is_parent', 1)->orderBy('title', 'ASC')->get();
@@ -44,7 +59,7 @@ class CategoryController extends Controller
             'summary'=>'string|nullable',
             'is_parent'=>'sometimes|in:1',
             'parent_id'=>'nullable|exists:categories,id',
-            'status'=>'nullable|in:active,inactive'
+            'status'=>'required|in:active,inactive'
         ]);
 
         $slug = Str::slug($request->input('title'));
@@ -68,17 +83,6 @@ class CategoryController extends Controller
         }else{
             return back()->with('error', 'Something went wrong!');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
     }
 
     /**
@@ -112,9 +116,9 @@ class CategoryController extends Controller
             $this->validate($request,[
                 'title'=>'required|string',
                 'summary'=>'string|nullable',
-                'is_parent'=>'sometimes|in:1',
+                'is_parent'=>'sometimes|in:1,0',
                 'parent_id'=>'nullable|exists:categories,id',
-                'status'=>'nullable|in:active,inactive'
+                'status'=>'in:active,inactive'
             ]);
 
 

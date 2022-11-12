@@ -63,8 +63,8 @@
                         </li>
                         <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-briefcase"></i><span>Products Management</span> </a>
                             <ul>
-                                <li><a href="departments.html">All Departments</a></li>
-                                <li><a href="add-departments.html">Add Departments</a></li>
+                                <li><a href="{{route('product.index')}}">All Products</a></li>
+                                <li><a href="{{route('product.create')}}">Add Product</a></li>
                             </ul>
                         </li>
                         <li><a href="javascript:void(0);" class="has-arrow"><i class="icon-basket-loaded"></i><span>Cards Management</span> </a>
